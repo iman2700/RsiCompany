@@ -13,6 +13,7 @@ namespace Repository.Configuration
     {
         public void Configure(EntityTypeBuilder<Company> builder)
         {
+
             builder.HasData
             (
             new Company

@@ -1,12 +1,26 @@
 using Contracts;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using RsiCompany.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+// Configures the services for adding controllers to the application.
+// Enables respect for the Accept header from the browser and returns HTTP Not Acceptable (406) when appropriate.
+// Inserts a JSON patch input formatter at the beginning of the input formatters list.
+// Adds XML data contract serializer formatters for handling XML content negotiation.
+builder.Services.AddControllers(config =>
+{
+    config.RespectBrowserAcceptHeader = true;
+    config.ReturnHttpNotAcceptable = true;
+    config.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
+}).AddXmlDataContractSerializerFormatters();
+
+
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureLoggerService();
 builder.Services.ConfigureSqlContext(builder.Configuration);
@@ -53,10 +67,26 @@ app.Run(async context =>
 await context.Response.WriteAsync("Hello from the middleware component.");
 });
 
+/// <summary>
+/// Retrieves the JSON patch input formatter used for handling JSON patch requests.
+/// </summary>
+/// <returns>An instance of NewtonsoftJsonPatchInputFormatter for processing JSON patch requests.</returns>
+NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter() =>
+    new ServiceCollection()
+        .AddLogging()
+        .AddMvc()
+        .AddNewtonsoftJson()
+        .Services
+        .BuildServiceProvider()
+        .GetRequiredService<IOptions<MvcOptions>>()
+        .Value
+        .InputFormatters
+        .OfType<NewtonsoftJsonPatchInputFormatter>()
+        .First();
 
- 
- 
+
+
+
 //builder.Services.ConfigureCors();
 //builder.Services.ConfigureIISIntegration();
- 
- 
+
