@@ -13,7 +13,7 @@ builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.ConfigureServiceManager();
 
 
-
+//AddCustomCSVFormatter()
 builder.Services.AddControllers()
 .AddApplicationPart(typeof(RsiCompany.Presentation.AssemblyReference).Assembly);
 

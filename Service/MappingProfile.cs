@@ -15,6 +15,8 @@ namespace Service
         {
             CreateMap<Company, CompanyDto>().ForMember(c => c.FullAddress, op => op.MapFrom(x => string.Join(' ', x.Address, x.Country)));
             CreateMap<Employee, EmployeeDto>();
+            CreateMap<CompanyForCreationDto, Company>();
+            CreateMap<EmployeeForCreationDto, Employee>();
         }
     }
 }

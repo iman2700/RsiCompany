@@ -44,6 +44,13 @@ namespace RsiCompany.Extensions
             services.AddScoped<IServiceManager, ServiceManager>();
 
 
+        // Extension method to add a custom CSV formatter to the MVC builder.
+        // It adds a CsvOutputFormatter instance to the MvcOptions' OutputFormatters collection.
+
+        public static IMvcBuilder AddCustomCSVFormatter(this IMvcBuilder builder)
+        {
+            return builder.AddMvcOptions(config => config.OutputFormatters.Add(new CsvOutputFormatter()));
+        }
     }
 
 

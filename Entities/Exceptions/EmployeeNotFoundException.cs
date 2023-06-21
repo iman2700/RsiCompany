@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Entities.Exceptions
 {
-    internal class EmployeeNotFoundException
+    public class EmployeeNotFoundException : NotFoundException
     {
+        public EmployeeNotFoundException(Guid employeeId) : base($"Employee with id: {employeeId} doesn't exist in the database.")
+        { }
     }
 }
