@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using RsiCompany.Extensions;
-using RsiCompany.Presentation.ActionFilters;
+ 
+using RsiCompany.ActionFilters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -72,8 +73,7 @@ await context.Response.WriteAsync("Hello from the middleware component.");
 /// Retrieves the JSON patch input formatter used for handling JSON patch requests.
 /// </summary>
 /// <returns>An instance of NewtonsoftJsonPatchInputFormatter for processing JSON patch requests.</returns>
-NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter() =>
-    new ServiceCollection()
+NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter() => new ServiceCollection()
         .AddLogging()
         .AddMvc()
         .AddNewtonsoftJson()

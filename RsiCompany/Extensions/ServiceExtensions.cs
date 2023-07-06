@@ -25,13 +25,14 @@ namespace RsiCompany.Extensions
 
         // Configures Cross-Origin Resource Sharing (CORS) for the application
         public static void ConfigureCors(this IServiceCollection services) =>
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy", builder =>
-                builder.AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
-            });
+          services.AddCors(options =>
+          {
+             options.AddPolicy("CorsPolicy", builder =>
+             builder.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .WithExposedHeaders("X-Pagination"));
+          });
 
         // Configures integration with Internet Information Services (IIS)
         public static void ConfigureIISIntegration(this IServiceCollection services) =>
