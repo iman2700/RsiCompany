@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using RsiCompany.Extensions;
+using RsiCompany.Presentation.ActionFilters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,7 +60,7 @@ app.UseCors("CorsPolicy");
 app.UseAuthorization();
 
 app.MapControllers();
-
+builder.Services.AddScoped<ValidationFilterAttribute>();
 
 
 app.Run(async context =>

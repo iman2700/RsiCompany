@@ -22,22 +22,10 @@ namespace Repository
         }
         public ICompanyRepository Company => _companyRepository.Value;
         public IEmployeeRepository Employee => _employeeRepository.Value;
-        public void Save()
+        public async Task SaveAsync()
         {
-            try
-            {
-                _repositoryContext.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                // Handle the exception or log the error
-                throw new Exception("An error occurred while saving the changes.", ex);
-            }
+            await _repositoryContext.SaveChangesAsync();
         }
-
-
-
-
     }
 
 }
