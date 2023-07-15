@@ -14,17 +14,13 @@ namespace Service
     {
         private readonly Lazy<ICompanyService> _companyService;
         private readonly Lazy<IEmployeeService> _employeeService;
-       
-        public ServiceManager(IRepositoryManager repositoryManager, ILoggerManager logger, IMapper mapper, IDataShaper<EmployeeDto> dataShaper)
+
+        public ServiceManager(IRepositoryManager repositoryManager, ILoggerManager logger, IMapper mapper, IEmployeeLinks employeeLinks)
         {
             _companyService = new Lazy<ICompanyService>(() =>
-            {
-                return new CompanyService(repositoryManager, logger, mapper);
-            });
+            new CompanyService(repositoryManager, logger, mapper));
             _employeeService = new Lazy<IEmployeeService>(() =>
-            {
-                return new EmployeeService(repositoryManager, logger, mapper, dataShaper);
-            });
+            new EmployeeService(repositoryManager, logger, mapper, employeeLinks));
         }
 
         // Method to create the EmployeeService object

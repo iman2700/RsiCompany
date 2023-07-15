@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using RsiCompany.Extensions;
  
 using RsiCompany.ActionFilters;
+using RsiCompany.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -85,8 +86,14 @@ NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter() => new ServiceCol
         .OfType<NewtonsoftJsonPatchInputFormatter>()
         .First();
 
-
-
+builder.Services.AddScoped<ValidationFilterAttribute>();
+builder.Services.AddCustomMediaTypes();
+builder.Services.AddScoped<ValidateMediaTypeAttribute>();
+builder.Services.AddScoped<IEmployeeLinks, EmployeeLinks>();
+//builder.Services.AddControllers(config =>
+//{
+//    config.Filters.Add(new GlobalFilterExample());
+//});
 
 //builder.Services.ConfigureCors();
 //builder.Services.ConfigureIISIntegration();

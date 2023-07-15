@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RsiCompany.Presentation.ActionFilters;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 
@@ -35,9 +34,9 @@ namespace RsiCompany.Presentation.Controllers
             var company = await _service.CompanyService.GetCompanyAsync(id, trackChanges: false);
             return Ok(company);
         }
-
-        [HttpPost]
+        CheckIfCompanyExists[HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
+ 
         public async Task<IActionResult> CreateCompany([FromBody] CompanyForCreationDto company)
         {
             if (company is null)
