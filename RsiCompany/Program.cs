@@ -21,6 +21,7 @@ builder.Services.AddControllers(config =>
     config.RespectBrowserAcceptHeader = true;
     config.ReturnHttpNotAcceptable = true;
     config.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
+    config.CacheProfiles.Add("120SecondsDuration", new CacheProfile { Duration = 120  });
 }).AddXmlDataContractSerializerFormatters();
 
 
@@ -90,6 +91,8 @@ builder.Services.AddScoped<ValidationFilterAttribute>();
 builder.Services.AddCustomMediaTypes();
 builder.Services.AddScoped<ValidateMediaTypeAttribute>();
 builder.Services.AddScoped<IEmployeeLinks, EmployeeLinks>();
+builder.Services.ConfigureResponseCaching();
+
 //builder.Services.AddControllers(config =>
 //{
 //    config.Filters.Add(new GlobalFilterExample());

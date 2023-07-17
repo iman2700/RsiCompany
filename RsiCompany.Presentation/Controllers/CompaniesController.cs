@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 
@@ -29,6 +30,8 @@ namespace RsiCompany.Presentation.Controllers
         }
 
         [HttpGet("{id:guid}")]
+        [ResponseCache(Duration = 60)]
+        [Authorize]
         public async Task<IActionResult> GetCompany(Guid id)
         {
             var company = await _service.CompanyService.GetCompanyAsync(id, trackChanges: false);
@@ -55,7 +58,7 @@ namespace RsiCompany.Presentation.Controllers
             false);
             return Ok(companies);
         }
-
+        [Authorize(Roles = "Manager")]
         [HttpPost("collection")]
         public async Task<IActionResult> CreateCompanyCollection([FromBody] IEnumerable<CompanyForCreationDto> companyCollection)
         {
